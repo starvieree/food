@@ -18,6 +18,9 @@ class AdminController extends Controller
 
     public function AdminDashboard()
     {
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login')->with('error', 'You do not have permission to access this page');
+        }
         return view('admin.index');
     }
 
@@ -105,6 +108,10 @@ class AdminController extends Controller
 
     public function AdminProfile()
     {
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login')->with('error', 'You do not have permission to access this page');
+        }
+
         $id = Auth::guard('admin')->id();
         $profileData = Admin::find($id);
 
@@ -154,6 +161,10 @@ class AdminController extends Controller
 
     public function AdminChangePassword()
     {
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login')->with('error', 'You do not have permission to access this page');
+        }
+        
         $id = Auth::guard('admin')->id();
         $profileData = Admin::find($id);
 

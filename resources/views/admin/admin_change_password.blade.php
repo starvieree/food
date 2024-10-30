@@ -1,28 +1,23 @@
 @extends('admin.admin_dashboard')
 @section('admin')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     <div class="page-content">
         <div class="container-fluid">
-
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Profile</h4>
-
+                        <h4 class="mb-sm-0 font-size-18">Change Password</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Contacts</a></li>
-                                <li class="breadcrumb-item active">Profile</li>
+                                <li class="breadcrumb-item active">Change Password</li>
                             </ol>
                         </div>
-
                     </div>
                 </div>
             </div>
             <!-- end page title -->
-
             <div class="row">
                 <div class="col-xl-9 col-lg-8">
                     <div class="card">
@@ -38,9 +33,8 @@
                                         </div>
                                         <div class="flex-grow-1">
                                             <div>
-                                                <h5 class="font-size-16 mb-1">{{ $profileData->name ?? 'Name Unavailable' }}</h5>
-                                                <p class="text-muted font-size-13">{{ $profileData->email ?? 'Email Unavailable' }}</p>
-
+                                                <h5 class="font-size-16 mb-1">{{ $profileData->name }}</h5>
+                                                <p class="text-muted font-size-13">{{ $profileData->email }}</p>
                                                 <div
                                                     class="d-flex flex-wrap align-items-start gap-2 gap-lg-3 text-muted font-size-13">
                                                     <div><i
@@ -54,81 +48,58 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+
                         </div>
                         <!-- end card body -->
                     </div>
                     <!-- end card -->
-
-
                     <div class="card-body p-4">
-                        <form method="POST" action="{{ route('admin.profile.store') }}" enctype="multipart/form-data">
+                        <form action="{{ route('admin.profile.update') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            
+
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div>
                                         <div class="mb-3">
-                                            <label for="example-text-input" class="form-label">Name</label>
-                                            <input class="form-control" name="name" type="text"
-                                                value="{{ $profileData->name ?? 'Name Unavailable' }}" id="example-text-input">
+                                            <label for="example-text-input" class="form-label">Old Password</label>
+                                            <input class="form-control @error('old_password') is-invalid @enderror"
+                                                type="password" name="old_password" id="old_password">
+                                            @error('old_password')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="example-text-input" class="form-label">Email</label>
-                                            <input class="form-control" name="email" type="email"
-                                                value="{{ $profileData->email ?? 'Email Unavailable' }}" id="example-text-input">
+                                            <label for="example-text-input" class="form-label">New Password</label>
+                                            <input class="form-control @error('new_password') is-invalid @enderror"
+                                                type="password" name="new_password" id="new_password">
+                                            @error('new_password')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="example-text-input" class="form-label">Phone</label>
-                                            <input class="form-control" name="phone" type="text"
-                                                value="{{ $profileData->phone ?? 'Phone Unavailable' }}" id="example-text-input">
+                                            <label for="example-text-input" class="form-label">Confirm New Password</label>
+                                            <input class="form-control" type="password" name="new_password_confirmation"
+                                                id="new_password_confirmation">
                                         </div>
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save
+                                            Changes</button>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <div class="mt-3 mt-lg-0">
-                                        <div class="mb-3">
-                                            <label for="example-text-input" class="form-label">Address</label>
-                                            <input class="form-control" name="address" type="text"
-                                                value="{{ $profileData->address ?? 'Address Unavailable' }}" id="example-text-input">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="example-text-input" class="form-label">Photo</label>
-                                            <input class="form-control" name="photo" type="file"
-                                                value="{{ $profileData->photo }}" id="image">
-                                        </div>
-                                        <div class="mb-3">
-                                            <img id="showImage" src="{{ !empty($profileData->photo) ? url('upload/admin_images/' . $profileData->photo) : url('upload/no_image.jpg') }}"
-                                                alt="" class="rounded-circle p-1 bg-primary" width="110">
-                                        </div>
-                                        <div class="mt-4">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Save
-                                                Changes</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </form>
                     </div>
 
+                    <!-- end tab content -->
                 </div>
+                <!-- end col -->
+
                 <!-- end col -->
             </div>
             <!-- end row -->
 
         </div> <!-- container-fluid -->
     </div>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#image').change(function(e) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#showImage').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(e.target.files['0']);
-            })
-        })
-    </script>
 @endsection

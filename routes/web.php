@@ -26,6 +26,9 @@ require __DIR__.'/auth.php';
 
 Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.admin_dashboard');
 Route::get('/admin/profile', [AdminController::class, 'AdminProfile'])->name('admin.profile');
+Route::post('/admin/profile/store', [AdminController::class, 'AdminProfileStore'])->name('admin.profile.store');
+Route::get('/admin/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
+Route::post('/admin/profile/update', [AdminController::class, 'AdminProfileUpdate'])->name('admin.profile.update');
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
 Route::post('/admin/login_submit', [AdminController::class, 'AdminLoginSubmit'])->name('admin.login_submit');

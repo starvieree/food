@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuth
+class ClientAuth
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check()) {
-            return redirect()->route('admin.login')->with('error','You do not have permission to access this page');;
+        if (!Auth::guard('client')->check()) {
+            return redirect()->route('client.login')->with('error','You do not have permission to access this page');;
         }
         return $next($request);
     }

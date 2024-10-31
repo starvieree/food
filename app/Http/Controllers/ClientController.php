@@ -87,7 +87,7 @@ class ClientController extends Controller
     {
         $id = Auth::guard('client')->id();
         $data = Client::find($id);
-        
+
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;
@@ -122,5 +122,42 @@ class ClientController extends Controller
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
+    }
+
+    public function ClientChangePassword()
+    {
+        $id = Auth::guard('client')->id();
+        $profileData = Client::find($id);
+
+        return view('client.client_change_Password', compact('profileData'));
+    }
+
+    public function ClientPasswordUpdate(Request $request)
+    {
+        $client = Auth::guard('client')->user();
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed'
+        ]);
+
+        if (!Hash::check($request->old_password, $client->password)) {
+            $notification = array(
+                'message' => 'Old Password Does not Match!',
+                'alert-type' => 'error'
+            );
+
+            return back()->with($notification);
+        }
+
+        Client::whereId($client->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        $notification = array(
+            'message' => 'Password Change Successfully',
+            'alert-type' => 'success'
+        );
+        
+        return back()->with($notification);
     }
 }

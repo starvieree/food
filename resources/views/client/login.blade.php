@@ -18,6 +18,8 @@
     <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{ asset('backend/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 </head>
 
 <body>
@@ -118,8 +120,9 @@
                                         </ul>
                                     </div>
                                     <div class="mt-5 text-center">
-                                        <p class="text-muted mb-0">Don't have an account ? <a href="{{ route('client.register') }}"
-                                                class="text-primary fw-semibold"> Signup now </a> </p>
+                                        <p class="text-muted mb-0">Don't have an account ? <a
+                                                href="{{ route('client.register') }}" class="text-primary fw-semibold">
+                                                Signup now </a> </p>
                                     </div>
                                 </div>
                                 <div class="mt-4 mt-md-5 text-center">
@@ -269,6 +272,28 @@
     <script src="{{ asset('backend/assets/libs/pace-js/pace.min.js') }}"></script>
     <!-- password addon init -->
     <script src="{{ asset('backend/assets/js/pages/pass-addon.init.js') }}"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}"
+            switch (type) {
+                case 'info':
+                    toastr.info(" {{ Session::get('message') }} ");
+                    break;
+                case 'success':
+                    toastr.success(" {{ Session::get('message') }} ");
+                    break;
+                case 'warning':
+                    toastr.warning(" {{ Session::get('message') }} ");
+                    break;
+                case 'error':
+                    toastr.error(" {{ Session::get('message') }} ");
+                    break;
+            }
+        @endif
+    </script>
+
 </body>
 
 </html>

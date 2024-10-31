@@ -28,7 +28,7 @@ class ClientController extends Controller
         ];
 
         if (Auth::guard('client')->attempt($data)) {
-            return redirect()->route('client.dashboard')->with('success', 'Login Successfully');
+            return redirect()->route('client.client_dashboard')->with('success', 'Login Successfully');
         } else {
             return redirect()->route('client.login')->with('error', 'Invalid Credentials');
         }
@@ -67,6 +67,6 @@ class ClientController extends Controller
 
     public function ClientDashboard()
     {
-        return view('client.client_dashboard');
+        return view('client.index');
     }
 }

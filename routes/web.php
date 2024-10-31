@@ -44,7 +44,7 @@ Route::post('/admin/reset_password_submit', [AdminController::class, 'AdminReset
 
 // Client Routing
 Route::middleware('client')->group(function () {
-    Route::get('/client/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
+    Route::get('/client/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.client_dashboard');
 });
 
 Route::get('/client/login', [ClientController::class, 'ClientLogin'])->name('client.login');

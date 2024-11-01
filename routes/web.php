@@ -8,6 +8,10 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
+Route::get('/dashboard', function() {
+    return view('frontend.dashboard.dashboard');
+})->middleware(['auth', 'verified']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -103,6 +103,7 @@
     </script>
     <!-- dashboard init -->
     <script src="{{ asset('backend/assets/js/pages/dashboard.init.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
 
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
 

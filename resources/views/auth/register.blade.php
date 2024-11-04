@@ -49,7 +49,7 @@
 
                                     <div class="form-label-group">
                                         <input type="text" name="name" id="ptext" class="form-control"
-                                            placeholder="Email address">
+                                            placeholder="Name">
                                         <label for="ptext">Name </label>
                                     </div>
 

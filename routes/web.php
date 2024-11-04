@@ -13,9 +13,11 @@ Route::get('/dashboard', function() {
 
 Route::middleware('auth')->group(function () {
     Route::post('/profile/store', [UserController::class, 'ProfileStore'])->name('profile.store');
+    Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
 });
 
 require __DIR__ . '/auth.php';
+
 
 // Admin Routing
 Route::middleware('admin')->group(function () {

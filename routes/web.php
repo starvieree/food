@@ -85,5 +85,10 @@ Route::middleware('client')->group(function() {
 
     Route::controller(RestaurantController::class)->group(function() {
         Route::get('/all/menu', 'AllMenu')->name('all.menu');
+        Route::get('/add/menu', 'AddMenu')->name('add.menu');
+        Route::post('/store/menu', 'StoreMenu')->name('store.menu');
+        Route::get('/edit/menu/{id}', 'EditMenu')->name('edit.menu');
+        Route::post('/update/menu', 'UpdateMenu')->name('update.menu');
+        Route::get('/delete/menu/{id}', 'DeleteMenu')->name('delete.menu');
     });
 });

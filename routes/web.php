@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
@@ -77,5 +78,12 @@ Route::middleware('admin')->group(function () {
         Route::get('/edit/city/{id}', 'EditCity')->name('edit.city');
         Route::post('/update/city', 'UpdateCity')->name('update.city');
         Route::get('/delete/city/{id}', 'DeleteCity')->name('delete.city');
+    });
+});
+
+Route::middleware('client')->group(function() {
+
+    Route::controller(RestaurantController::class)->group(function() {
+        Route::get('/all/menu', 'AllMenu')->name('all.menu');
     });
 });

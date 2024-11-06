@@ -60,6 +60,7 @@ Route::get('/client/logout', [ClientController::class, 'ClientLogout'])->name('c
 
 // All Admin Category
 Route::middleware('admin')->group(function () {
+
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/all/category', 'AllCategory')->name('all.category');
         Route::get('/add/category', 'AddCategory')->name('add.category');
@@ -67,5 +68,14 @@ Route::middleware('admin')->group(function () {
         Route::get('/edit/category/{id}', 'EditCategory')->name('edit.category');
         Route::post('/update/category', 'UpdateCategory')->name('update.category');
         Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
+    });
+
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/all/city', 'AllCity')->name('all.city');
+        // Route::get('/add/city', 'AddCity')->name('add.city');
+        Route::post('/store/city', 'StoreCity')->name('store.city');
+        Route::get('/edit/city/{id}', 'EditCity')->name('edit.city');
+        Route::post('/update/city', 'UpdateCity')->name('update.city');
+        Route::get('/delete/city/{id}', 'DeleteCity')->name('delete.city');
     });
 });

@@ -26,6 +26,8 @@
                                 enctype="multipart/form-data">
                                 @csrf
 
+                                <input type="hidden" name="id" value="{{ $product->id }}" >
+
                                 <div class="row">
                                     <div class="col-xl-4 col-md-6">
                                         <div class="form-group mb-3">

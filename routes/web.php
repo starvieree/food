@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\Client\RestaurantController;
+use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Client\RestaurantController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
@@ -109,5 +110,14 @@ Route::middleware('client')->group(function() {
         Route::get('/edit/gallery/{id}', 'EditGallery')->name('edit.gallery');
         Route::post('/update/gallery', 'UpdateGallery')->name('update.gallery');
         Route::get('/delete/gallery/{id}', 'DeleteGallery')->name('delete.gallery');
+    });
+
+    Route::controller(CouponController::class)->group(function(){
+        Route::get('/all/coupon', 'AllCoupon')->name('all.coupon');
+        Route::get('/add/coupon', 'AddCoupon')->name('add.coupon');
+        Route::post('/store/coupon', 'StoreCoupon')->name('store.coupon');
+        Route::get('/edit/coupon/{id}', 'EditCoupon')->name('edit.coupon');
+        Route::post('/update/coupon', 'UpdateCoupon')->name('update.coupon');
+        Route::get('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
     });
 });

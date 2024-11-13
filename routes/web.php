@@ -91,11 +91,17 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/delete/product/{id}', 'AdminDeleteProduct')->name('admin.delete.product');
         // Route::get('/changeStatus', 'ChangeStatus');
     });
+
+    Route::controller(ManageController::class)->group(function(){
+        Route::get('/pending/restaurant', 'PendingRestaurant')->name('pending.restaurant');
+        Route::get('/clientChangeStatus', 'ClientChangeStatus');
+        Route::get('/approve/restaurant', 'ApproveRestaurant')->name('approve.restaurant');
+    });
 });
 
 
 
-Route::middleware('client')->group(function() {
+Route::middleware(['client', 'status'])->group(function() {
 
     Route::controller(RestaurantController::class)->group(function() {
         Route::get('/all/menu', 'AllMenu')->name('all.menu');

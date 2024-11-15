@@ -11,7 +11,7 @@ use App\Http\Controllers\Client\RestaurantController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
-Route::get('/dashboard', function() {
+Route::get('/dashboard', function () {
     return view('frontend.dashboard.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -92,18 +92,26 @@ Route::middleware('admin')->group(function () {
         // Route::get('/changeStatus', 'ChangeStatus');
     });
 
-    Route::controller(ManageController::class)->group(function(){
+    Route::controller(ManageController::class)->group(function () {
         Route::get('/pending/restaurant', 'PendingRestaurant')->name('pending.restaurant');
         Route::get('/clientChangeStatus', 'ClientChangeStatus');
         Route::get('/approve/restaurant', 'ApproveRestaurant')->name('approve.restaurant');
+    });
+
+    Route::controller(ManageController::class)->group(function () {
+        Route::get('/all/banner', 'AllBanner')->name('all.banner');
+        Route::post('/banner/store', 'BannerStore')->name('banner.store');
+        Route::get('/edit/banner/{id}', 'EditBanner');
+        Route::post('/banner/update', 'BannerUpdate')->name('banner.update'); 
+        Route::get('/delete/banner/{id}', 'DeleteBanner')->name('delete.banner');
     });
 });
 
 
 
-Route::middleware(['client', 'status'])->group(function() {
+Route::middleware(['client', 'status'])->group(function () {
 
-    Route::controller(RestaurantController::class)->group(function() {
+    Route::controller(RestaurantController::class)->group(function () {
         Route::get('/all/menu', 'AllMenu')->name('all.menu');
         Route::get('/add/menu', 'AddMenu')->name('add.menu');
         Route::post('/store/menu', 'StoreMenu')->name('store.menu');
@@ -112,7 +120,7 @@ Route::middleware(['client', 'status'])->group(function() {
         Route::get('/delete/menu/{id}', 'DeleteMenu')->name('delete.menu');
     });
 
-    Route::controller(RestaurantController::class)->group(function() {
+    Route::controller(RestaurantController::class)->group(function () {
         Route::get('/all/product', 'AllProduct')->name('all.product');
         Route::get('/add/product', 'AddProduct')->name('add.product');
         Route::post('/store/product', 'StoreProduct')->name('store.product');
@@ -122,7 +130,7 @@ Route::middleware(['client', 'status'])->group(function() {
         // Route::get('/changeStatus', 'ChangeStatus');
     });
 
-    route::controller(RestaurantController::class)->group(function() {
+    route::controller(RestaurantController::class)->group(function () {
         Route::get('/all/gallery', 'AllGallery')->name('all.gallery');
         Route::get('/add/gallery', 'AddGallery')->name('add.gallery');
         Route::post('/store/gallery', 'StoreGallery')->name('store.gallery');
@@ -131,7 +139,7 @@ Route::middleware(['client', 'status'])->group(function() {
         Route::get('/delete/gallery/{id}', 'DeleteGallery')->name('delete.gallery');
     });
 
-    Route::controller(CouponController::class)->group(function(){
+    Route::controller(CouponController::class)->group(function () {
         Route::get('/all/coupon', 'AllCoupon')->name('all.coupon');
         Route::get('/add/coupon', 'AddCoupon')->name('add.coupon');
         Route::post('/store/coupon', 'StoreCoupon')->name('store.coupon');

@@ -44,13 +44,13 @@
                                     @else
                                     @endif
                                 </div>
-                                <a href="detail.html">
+                                <a href="{{ route('res.details', $client->id) }}">
                                     <img src="{{ asset('frontend/img/list/1.png') }}" class="img-fluid item-img">
                                 </a>
                             </div>
                             <div class="p-3 position-relative">
                                 <div class="list-card-body">
-                                    <h6 class="mb-1"><a href="detail.html" class="text-black">World Famous</a>
+                                    <h6 class="mb-1"><a href="{{ route('res.details', $client->id) }}" class="text-black">World Famous</a>
                                     </h6>
                                     <p class="text-gray mb-3">{{ $menuNamesString }}</p>
                                     <p class="text-gray mb-3 time"><span

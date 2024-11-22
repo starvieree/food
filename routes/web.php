@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Admin\ManageController;
 use App\Http\Controllers\Client\CouponController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\RestaurantController;
 
@@ -150,3 +151,7 @@ Route::middleware(['client', 'status'])->group(function () {
 });
 
 Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus']);
+
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('res.details');
+});

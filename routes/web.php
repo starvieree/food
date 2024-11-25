@@ -21,6 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
     Route::get('/change/password', [UserController::class, 'ChangePassword'])->name('change.password');
     Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
+
+    // Get Wishlist data for user 
+    Route::get('/all/wishlist', [HomeController::class, 'AllWishList'])->name('all.wishlist');
+    Route::get('/remove/wishlist/{id}', [HomeController::class, 'RemoveWishlist'])->name('remove.wishlist');
 });
 
 require __DIR__ . '/auth.php';
@@ -154,4 +158,5 @@ Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus']);
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('res.details');
+    Route::get('/add-wish-list/{id}', 'AddWishList');
 });

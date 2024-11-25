@@ -1,4 +1,5 @@
-@include('frontend.dashboard.header')
+@extends('frontend.dashboard.dashboard')
+@section('dashboard')
 
 @php
     $products = App\Models\Product::where('client_id', $client->id)
@@ -651,6 +652,4 @@
     </div>
 </section>
 
-
-
-@include('frontend.dashboard.footer')
+@endsection

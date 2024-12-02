@@ -168,4 +168,5 @@ Route::controller(CartController::class)->group(function(){
     Route::post('/cart/remove', 'CartRemove')->name('cart.remove');
     Route::post('/apply-coupon', 'ApplyCoupon');
     Route::get('/remove-coupon', 'CouponRemove');
+    Route::get('/checkout', 'ShopCheckout')->name('checkout');
 });

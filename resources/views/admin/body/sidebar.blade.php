@@ -64,8 +64,8 @@
                             <a href="{{ route('admin.add.product') }}">
                                 <span data-key="t-chat">Add Product</span>
                             </a>
-                        </li> 
-                       
+                        </li>
+
                     </ul>
                 </li>
 
@@ -84,7 +84,7 @@
                             <a href="{{ route('approve.restaurant') }}">
                                 <span data-key="t-chat">Approve Restaurant</span>
                             </a>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
 
@@ -98,8 +98,37 @@
                             <a href="{{ route('all.banner') }}">
                                 <span data-key="t-calendar">All Banner </span>
                             </a>
-                        </li> 
-                       
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Manage Orders</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('pending.order') }}">
+                                <span data-key="t-calendar">Pending Orders </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('confirm.order') }}">
+                                <span data-key="t-calendar">Confirm Orders </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('processing.order') }}">
+                                <span data-key="t-calendar">Processing Orders </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('delivered.order') }}">
+                                <span data-key="t-calendar">Delivered Orders </span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

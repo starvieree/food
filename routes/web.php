@@ -10,6 +10,7 @@ use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Client\RestaurantController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
@@ -109,8 +110,23 @@ Route::middleware('admin')->group(function () {
         Route::get('/all/banner', 'AllBanner')->name('all.banner');
         Route::post('/banner/store', 'BannerStore')->name('banner.store');
         Route::get('/edit/banner/{id}', 'EditBanner');
-        Route::post('/banner/update', 'BannerUpdate')->name('banner.update'); 
+        Route::post('/banner/update', 'BannerUpdate')->name('banner.update');
         Route::get('/delete/banner/{id}', 'DeleteBanner')->name('delete.banner');
+    });
+
+    Route::controller(ManageOrderController::class)->group(function () {
+        Route::get('/pending/order', 'PendingOrder')->name('pending.order');
+        Route::get('/confirm/order', 'ConfirmOrder')->name('confirm.order');
+        Route::get('/processing/order', 'ProcessingOrder')->name('processing.order');
+        Route::get('/delivered/order', 'DeliveredOrder')->name('delivered.order');
+
+        Route::get('/admin/order/details/{id}', 'AdminOrderDetails')->name('admin.order.details');
+    });
+
+    Route::controller(ManageOrderController::class)->group(function () {
+        Route::get('/pending_to_confirm/{id}', 'PendingToConfirm')->name('pending_to_confirm');
+        Route::get('/confirm_to_processing/{id}', 'ConfirmToProcessing')->name('confirm_to_processing');
+        Route::get('/processing_to_delivered/{id}', 'ProcessingToDelivered')->name('processing_to_delivered');
     });
 });
 
@@ -164,7 +180,7 @@ Route::controller(HomeController::class)->group(function () {
 });
 
 Route::controller(CartController::class)->group(function () {
-    Route::get('/add_to_cart/{id}', 'AddToCart')->name('add_to_cart');  
+    Route::get('/add_to_cart/{id}', 'AddToCart')->name('add_to_cart');
     Route::post('/cart/update-quantity', 'updateCartQuanity')->name('cart.updateQuantity');
     Route::post('/cart/remove', 'CartRemove')->name('cart.remove');
     Route::post('/apply-coupon', 'ApplyCoupon');

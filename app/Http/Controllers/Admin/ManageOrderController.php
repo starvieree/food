@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ManageOrderController extends Controller
 {
@@ -49,36 +50,60 @@ class ManageOrderController extends Controller
     public function PendingToConfirm($id)
     {
         Order::find($id)->update(['status' => 'confirm']);
-        
+
         $notification = array(
             'message' => 'Order Confirm Successfully',
             'alert-type' => 'success'
         );
-        
+
         return redirect()->route('confirm.order')->with($notification);
     }
-    
+
     public function ConfirmToProcessing($id)
     {
         Order::find($id)->update(['status' => 'processing']);
-        
+
         $notification = array(
             'message' => 'Order Processing Successfully',
             'alert-type' => 'success'
         );
-        
+
         return redirect()->route('processing.order')->with($notification);
     }
-    
+
     public function ProcessingToDiliverd($id)
     {
         Order::find($id)->update(['status' => 'deliverd']);
-        
+
         $notification = array(
             'message' => 'Order Processing Successfully',
             'alert-type' => 'success'
         );
-        
+
         return redirect()->route('delivered.order')->with($notification);
+    }
+
+    public function AllClientOrders()
+    {
+        $clientId = Auth::guard('client')->id();
+        $orderItemGroupData = OrderItem::with(['product', 'order'])->where('client_id', $clientId)
+            ->orderBy('order_id', 'desc')
+            ->get()
+            ->groupBy('order_id');
+
+        return view('client.backend.order.all_orders', compact('orderItemGroupData'));
+    }
+
+    public function ClientOrderDetails($id)
+    {
+        $order = Order::with('user')->where('id', $id)->first();
+        $orderItem = OrderItem::with('product')->where('order_id', $id)->orderBy('id', 'desc')->get();
+        $totalPrice = 0;
+        
+        foreach ($orderItem as $item) {
+            $totalPrice += $item->price * $item->qty;
+        }
+        
+        return view('client.backend.order.client_order_details', compact('order', 'orderItem', 'totalPrice'));
     }
 }

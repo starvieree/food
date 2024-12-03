@@ -170,6 +170,11 @@ Route::middleware(['client', 'status'])->group(function () {
         Route::post('/update/coupon', 'UpdateCoupon')->name('update.coupon');
         Route::get('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
     });
+
+    Route::controller(ManageOrderController::class)->group(function () {
+        Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders');
+        Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details');
+    });
 });
 
 Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus']);

@@ -118,8 +118,10 @@ class ManageOrderController extends Controller
 
     public function UserOrderDetails($id)
     {
+        $cid = Auth::guard('client')->id();
         $order = Order::with('user')->where('id', $id)->where('user_id', Auth::id())->first();
-        $orderItem = OrderItem::with('product')->where('order_id', $id)->orderBy('id', 'desc')->get();
+        $orderItem = OrderItem::with('product')->where('order_id', $id)->where('client_id', $cid)->orderBy('id', 'desc')->get();
+
         $totalPrice = 0;
 
         foreach ($orderItem as $item) {
@@ -134,16 +136,16 @@ class ManageOrderController extends Controller
         $order = Order::with('user')->where('id', $id)->where('user_id', Auth::id())->first();
         $orderItem = OrderItem::with('product')->where('order_id', $id)->orderBy('id', 'desc')->get();
         $totalPrice = 0;
-        
+
         foreach ($orderItem as $item) {
             $totalPrice += $item->price * $item->qty;
         }
-        
+
         $pdf = Pdf::loadView('frontend.dashboard.order.invoice_download', compact('order', 'orderItem', 'totalPrice'))->setPaper('a4')->setOption([
             'tempDir' => public_path(),
             'chroot' => public_path(),
         ]);
-        
+
         return $pdf->download('invoice.pdf');
     }
 }

@@ -1,7 +1,7 @@
 @extends('frontend.dashboard.dashboard')
 @section('dashboard')
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+    </script>
 
     @php
         $products = App\Models\Product::where('client_id', $client->id)
@@ -157,8 +157,7 @@
                                                 <div class="list-card-image">
                                                     <div class="star position-absolute"><span
                                                             class="badge badge-success"><i class="icofont-star"></i> 3.1
-                                                            (300+)
-                                                        </span></div>
+                                                            (300+)</span></div>
                                                     <div class="favourite-heart text-danger position-absolute"><a
                                                             href="#"><i class="icofont-heart"></i></a></div>
                                                     <div class="member-plan position-absolute"><span
@@ -217,15 +216,8 @@
                                                                 alt="Generic placeholder image">
                                                             <div class="media-body">
                                                                 <h6 class="mb-1">{{ $product->name }}</h6>
-                                                                @if ($product->size == null)
-                                                                    <p class="text-gray mb-0"> </p>
-                                                                @else
-                                                                    <p class="text-gray mb-0"> ({{ $product->size }} cm)
-                                                                    </p>
-                                                                @endif
                                                                 <p class="text-gray mb-0">${{ $product->price }}
-                                                                    ({{ $product->size ?? '' }} cm)
-                                                                </p>
+                                                                    ({{ $product->size ?? '' }} cm)</p>
 
                                                             </div>
                                                         </div>
@@ -255,6 +247,7 @@
                                             @endforeach
 
                                         </div>
+
 
                                     </div>
                                 </div>
@@ -371,151 +364,187 @@
                                 </div>
                                 <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
                                     <h5 class="mb-4">Ratings and Reviews</h5>
-                                    <div class="graph-star-rating-header">
+                                    {{-- <div class="graph-star-rating-header">
                                         <div class="star-rating">
-                                            <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                            <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                            <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                            <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                            <a href="#"><i class="icofont-ui-rating"></i></a> <b
-                                                class="text-black ml-2">334</b>
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <a href="#"><i
+                                                        class="icofont-ui-rating {{ $i <= round($roundedAverageRating) ? 'active' : '' }}"></i></a>
+                                            @endfor
+                                            <b class="text-black ml-2">{{ $totalReviews }}</b>
                                         </div>
-                                        <p class="text-black mb-4 mt-2">Rated 3.5 out of 5</p>
+                                        <p class="text-black mb-4 mt-2">Rated {{ $roundedAverageRating }} out of 5</p>
                                     </div>
+
                                     <div class="graph-star-rating-body">
-                                        <div class="rating-list">
-                                            <div class="rating-list-left text-black">
-                                                5 Star
-                                            </div>
-                                            <div class="rating-list-center">
-                                                <div class="progress">
-                                                    <div style="width: 56%" aria-valuemax="5" aria-valuemin="0"
-                                                        aria-valuenow="5" role="progressbar"
-                                                        class="progress-bar bg-primary">
-                                                        <span class="sr-only">80% Complete (danger)</span>
+
+                                        @foreach ($ratingCounts as $star => $count)
+                                            <div class="rating-list">
+                                                <div class="rating-list-left text-black">
+                                                    {{ $star }} Star
+                                                </div>
+                                                <div class="rating-list-center">
+                                                    <div class="progress">
+                                                        <div style="width: {{ $ratingPercentages[$star] }}%"
+                                                            aria-valuemax="5" aria-valuemin="0" aria-valuenow="5"
+                                                            role="progressbar" class="progress-bar bg-primary">
+                                                            <span class="sr-only">{{ $ratingPercentages[$star] }}%
+                                                                Complete (danger)</span>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="rating-list-right text-black">
+                                                    {{ number_format($ratingPercentages[$star], 2) }}%</div>
                                             </div>
-                                            <div class="rating-list-right text-black">56%</div>
-                                        </div>
-                                        <div class="rating-list">
-                                            <div class="rating-list-left text-black">
-                                                4 Star
-                                            </div>
-                                            <div class="rating-list-center">
-                                                <div class="progress">
-                                                    <div style="width: 23%" aria-valuemax="5" aria-valuemin="0"
-                                                        aria-valuenow="5" role="progressbar"
-                                                        class="progress-bar bg-primary">
-                                                        <span class="sr-only">80% Complete (danger)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rating-list-right text-black">23%</div>
-                                        </div>
-                                        <div class="rating-list">
-                                            <div class="rating-list-left text-black">
-                                                3 Star
-                                            </div>
-                                            <div class="rating-list-center">
-                                                <div class="progress">
-                                                    <div style="width: 11%" aria-valuemax="5" aria-valuemin="0"
-                                                        aria-valuenow="5" role="progressbar"
-                                                        class="progress-bar bg-primary">
-                                                        <span class="sr-only">80% Complete (danger)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rating-list-right text-black">11%</div>
-                                        </div>
-                                        <div class="rating-list">
-                                            <div class="rating-list-left text-black">
-                                                2 Star
-                                            </div>
-                                            <div class="rating-list-center">
-                                                <div class="progress">
-                                                    <div style="width: 2%" aria-valuemax="5" aria-valuemin="0"
-                                                        aria-valuenow="5" role="progressbar"
-                                                        class="progress-bar bg-primary">
-                                                        <span class="sr-only">80% Complete (danger)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="rating-list-right text-black">02%</div>
-                                        </div>
-                                    </div>
+                                        @endforeach
+
+                                    </div> --}}
+
+
                                     <div class="graph-star-rating-footer text-center mt-3 mb-3">
                                         <button type="button" class="btn btn-outline-primary btn-sm">Rate and
                                             Review</button>
                                     </div>
                                 </div>
-                                <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
+                                {{-- <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
                                     <a href="#" class="btn btn-outline-primary btn-sm float-right">Top Rated</a>
                                     <h5 class="mb-1">All Ratings and Reviews</h5>
-                                    <div class="reviews-members pt-4 pb-4">
-                                        <div class="media">
-                                            <a href="#"><img alt="Generic placeholder image" src="img/user/1.png"
-                                                    class="mr-3 rounded-pill"></a>
-                                            <div class="media-body">
-                                                <div class="reviews-members-header">
-                                                    <span class="star-rating float-right">
-                                                        <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                                        <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                                        <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                                        <a href="#"><i class="icofont-ui-rating active"></i></a>
-                                                        <a href="#"><i class="icofont-ui-rating"></i></a>
-                                                    </span>
-                                                    <h6 class="mb-1"><a class="text-black" href="#">Singh
-                                                            Osahan</a></h6>
-                                                    <p class="text-gray">Tue, 20 Mar 2020</p>
-                                                </div>
-                                                <div class="reviews-members-body">
-                                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It
-                                                        has roots in a piece of classical Latin literature from 45 BC,
-                                                        making it over 2000 years old. Richard McClintock, a Latin professor
-                                                        at Hampden-Sydney College in Virginia, looked up one of the more
-                                                        obscure Latin words, consectetur, from a Lorem Ipsum passage, and
-                                                        going through the cites of the word in classical literature,
-                                                        discovered the undoubtable source. Lorem Ipsum comes from sections
-                                                    </p>
-                                                </div>
-                                                <div class="reviews-members-footer">
-                                                    <a class="total-like" href="#"><i
-                                                            class="icofont-thumbs-up"></i> 856M</a> <a class="total-like"
-                                                        href="#"><i class="icofont-thumbs-down"></i> 158K</a>
+                                    <style>
+                                        .icofont-ui-rating {
+                                            color: #ccc;
+                                        }
 
+                                        .icofont-ui-rating.active {
+                                            color: #dd646e;
+                                        }
+                                    </style>
+                                    @php
+                                        $reviews = App\Models\Review::where('client_id', $client->id)
+                                            ->where('status', 1)
+                                            ->latest()
+                                            ->limit(5)
+                                            ->get();
+                                    @endphp
+
+                                    @foreach ($reviews as $review)
+                                        <div class="reviews-members pt-4 pb-4">
+                                            <div class="media">
+                                                <a href="#"><img alt="Generic placeholder image"
+                                                        src="{{ !empty($review->user->photo) ? url('upload/user_images/' . $review->user->photo) : url('upload/no_image.jpg') }}"
+                                                        class="mr-3 rounded-pill"></a>
+                                                <div class="media-body">
+                                                    <div class="reviews-members-header">
+                                                        <span class="star-rating float-right">
+                                                            @php
+                                                                $rating = $review->rating ?? 0;
+                                                            @endphp
+                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                @if ($i <= $rating)
+                                                                    <a href="#"><i
+                                                                            class="icofont-ui-rating active"></i></a>
+                                                                @else
+                                                                    <a href="#"><i
+                                                                            class="icofont-ui-rating"></i></a>
+                                                                @endif
+                                                            @endfor
+                                                        </span>
+                                                        <h6 class="mb-1"><a class="text-black"
+                                                                href="#">{{ $review->user->name }}</a></h6>
+                                                        <p class="text-gray">
+                                                            {{ Carbon\Carbon::parse($review->created_at)->diffForHumans() }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="reviews-members-body">
+                                                        <p> {{ $review->comment }} </p>
+                                                    </div>
+                                                    <div class="reviews-members-footer">
+                                                        <a class="total-like" href="#"><i
+                                                                class="icofont-thumbs-up"></i> 856M</a> <a
+                                                            class="total-like" href="#"><i
+                                                                class="icofont-thumbs-down"></i> 158K</a>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
+
                                     <hr>
 
                                     <hr>
                                     <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">See All
                                         Reviews</a>
-                                </div>
+                                </div> --}}
+
+
                                 <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
-                                    <h5 class="mb-4">Leave Comment</h5>
-                                    <p class="mb-2">Rate the Place</p>
-                                    <div class="mb-4">
-                                        <span class="star-rating">
-                                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                            <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                        </span>
-                                    </div>
-                                    <form>
-                                        <div class="form-group">
-                                            <label>Your Comment</label>
-                                            <textarea class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary btn-sm" type="button"> Submit Comment
-                                            </button>
-                                        </div>
-                                    </form>
+                                    @guest
+                                        <p><b>For Add Resturant Review. You need to login first <a
+                                                    href="{{ route('login') }}"> Login Here </a> </b></p>
+                                    @else
+                                        <style>
+                                            .star-rating label {
+                                                display: inline-flex;
+                                                margin-right: 5px;
+                                                cursor: pointer;
+                                            }
+
+                                            .star-rating input[type="radio"] {
+                                                display: none;
+                                            }
+
+                                            .star-rating input[type="radio"]:checked+.star-icon {
+                                                color: #dd646e;
+                                            }
+                                        </style>
+
+                                        <h5 class="mb-4">Leave Comment</h5>
+                                        <p class="mb-2">Rate the Place</p>
+                                        <form method="post" action="#">
+                                            {{-- {{ route('store.review') }} --}}
+                                            @csrf
+                                            <input type="hidden" name="client_id" value="{{ $client->id }}">
+
+                                            <div class="mb-4">
+                                                <span class="star-rating">
+                                                    <label for="rating-1">
+                                                        <input type="radio" name="rating" id="rating-1" value="1"
+                                                            hidden><i
+                                                            class="icofont-ui-rating icofont-2x star-icon"></i></label>
+
+                                                    <label for="rating-2">
+                                                        <input type="radio" name="rating" id="rating-2" value="2"
+                                                            hidden><i
+                                                            class="icofont-ui-rating icofont-2x star-icon"></i></label>
+                                                    <label for="rating-3">
+                                                        <input type="radio" name="rating" id="rating-3" value="3"
+                                                            hidden><i
+                                                            class="icofont-ui-rating icofont-2x star-icon"></i></label>
+
+                                                    <label for="rating-4">
+                                                        <input type="radio" name="rating" id="rating-4" value="4"
+                                                            hidden><i
+                                                            class="icofont-ui-rating icofont-2x star-icon"></i></label>
+
+                                                    <label for="rating-5">
+                                                        <input type="radio" name="rating" id="rating-5" value="5"
+                                                            hidden><i
+                                                            class="icofont-ui-rating icofont-2x star-icon"></i></label>
+
+
+                                                </span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Your Comment</label>
+                                                <textarea class="form-control" name="comment" id="comment"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-primary btn-sm" type="submit"> Submit Comment
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    @endguest
                                 </div>
                             </div>
                         </div>
@@ -545,11 +574,13 @@
                                 <p class="mb-0">{{ $coupon->discount }}% off on orders above $99 | Use coupon <span
                                         class="text-danger font-weight-bold">{{ $coupon->coupon_name }}</span></p>
                             @endif
+
                             <div class="icon-overlap">
                                 <i class="icofont-sale-discount"></i>
                             </div>
                         </div>
                     </div>
+
                     <div class="generator-bg rounded shadow-sm mb-4 p-4 osahan-cart-item">
                         <h5 class="mb-1 text-white">Your Order</h5>
                         <p class="mb-4 text-white">{{ count((array) session('cart')) }} ITEMS</p>
@@ -561,16 +592,21 @@
                                     @php
                                         $total += $details['price'] * $details['quantity'];
                                     @endphp
+
                                     <div class="gold-members p-2 border-bottom">
                                         <p class="text-gray mb-0 float-right ml-2">
                                             ${{ $details['price'] * $details['quantity'] }}</p>
                                         <span class="count-number float-right">
+
                                             <button class="btn btn-outline-secondary  btn-sm left dec"
                                                 data-id="{{ $id }}"> <i class="icofont-minus"></i> </button>
+
                                             <input class="count-number-input" type="text"
                                                 value="{{ $details['quantity'] }}" readonly="">
+
                                             <button class="btn btn-outline-secondary btn-sm right inc"
                                                 data-id="{{ $id }}"> <i class="icofont-plus"></i> </button>
+
                                             <button class="btn btn-outline-danger btn-sm right remove"
                                                 data-id="{{ $id }}"> <i class="icofont-trash"></i> </button>
                                         </span>
@@ -584,6 +620,8 @@
                                     </div>
                                 @endforeach
                             @endif
+
+
                         </div>
 
                         @if (Session::has('coupon'))
@@ -601,6 +639,7 @@
 
                                 <p class="mb-1 text-success">Total Discount
                                     <span class="float-right text-success">
+
                                         @if (Session::has('coupon'))
                                             ${{ $total - Session()->get('coupon')['discount_amount'] }}
                                         @else
@@ -631,6 +670,8 @@
                             </div>
                         @endif
 
+
+
                         <div class="mb-2 bg-white rounded p-2 clearfix">
                             <img class="img-fluid float-left" src="{{ asset('frontend/img/wallet-icon.png') }}">
                             <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger">
@@ -641,8 +682,9 @@
                                     @endif
                                 </span></h6>
                             <p class="seven-color mb-1 text-right">Extra charges may apply</p>
-                            <p class="text-black mb-0 text-right">You have saved $955 on the bill</p>
+
                         </div>
+
                         <a href="{{ route('checkout') }}" class="btn btn-success btn-block btn-lg">Checkout <i
                                 class="icofont-long-arrow-right"></i></a>
                     </div>
@@ -660,6 +702,7 @@
 
     <script>
         $(document).ready(function() {
+
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -671,12 +714,14 @@
                     toast.addEventListener('mouseleave', Swal.resumeTimer);
                 }
             });
+
             $('.inc').on('click', function() {
                 var id = $(this).data('id');
                 var input = $(this).closest('span').find('input');
                 var newQuantity = parseInt(input.val()) + 1;
                 updateQuantity(id, newQuantity);
             });
+
             $('.dec').on('click', function() {
                 var id = $(this).data('id');
                 var input = $(this).closest('span').find('input');
@@ -685,6 +730,7 @@
                     updateQuantity(id, newQuantity);
                 }
             });
+
             $('.remove').on('click', function() {
                 var id = $(this).data('id');
                 removeFromCart(id);
@@ -700,7 +746,13 @@
                         quantity: quantity
                     },
                     success: function(response) {
-                        location.reload();
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Quantity Updated'
+                        }).then(() => {
+                            location.reload();
+                        });
+
                     }
                 })
             }
@@ -714,10 +766,21 @@
                         id: id
                     },
                     success: function(response) {
-                        location.reload();
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Cart Remove Successfully'
+                        }).then(() => {
+                            location.reload();
+                        });
+
                     }
                 });
             }
+
+
+
         })
     </script>
+
 @endsection

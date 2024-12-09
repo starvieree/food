@@ -47,16 +47,16 @@
                                                     style="width: 70px; height:40px;"></td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item['menu']['menu_name'] }}</td>
-                                            <td>{{ $item->qty }}</td>
                                             <td>{{ $item->price }}</td>
+                                            <td>{{ $item->qty }}</td>
                                             <td>
                                                 @if ($item->discount_price == null)
                                                     <span class="badge bg-danger">No Discount</span>
                                                 @else
                                                     @php
                                                         $amount = $item->price - $item->discount_price;
-                                                        // $discount = ($amount / $item->price) * 100;
-                                                        $discount = 100 - ($amount / $item->price) * 100;
+                                                        $discount = ($amount / $item->price) * 100;
+                                                        // $discount = 100 - ($amount / $item->price) * 100;
                                                     @endphp
                                                     <span class="badge bg-danger">{{ round($discount) }}%</span>
                                                 @endif

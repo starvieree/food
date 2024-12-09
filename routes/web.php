@@ -3,13 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Admin\ManageController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Client\RestaurantController;
 
@@ -135,6 +136,18 @@ Route::middleware('admin')->group(function () {
         Route::get('/confirm_to_processing/{id}', 'ConfirmToProcessing')->name('confirm_to_processing');
         Route::get('/processing_to_delivered/{id}', 'ProcessingToDelivered')->name('processing_to_delivered');
     });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/admin/all/reports', 'AdminAllReports')->name('admin.all.reports');
+        Route::post('/admin/search/bydate', 'AdminSearchByDate')->name('admin.search.bydate');
+        Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('admin.search.bymonth');
+        Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
+    });
+
+    // Route::controller(ReviewController::class)->group(function(){
+    //     Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');
+    //     Route::get('/admin/approve/review', 'AdminApproveReview')->name('admin.approve.review');  
+    // });
 });
 
 
@@ -203,3 +216,4 @@ Route::controller(CartController::class)->group(function () {
 Route::controller(OrderController::class)->group(function () {
     Route::post('/cash_order', 'CashOrder')->name('cash_order');
 });
+
